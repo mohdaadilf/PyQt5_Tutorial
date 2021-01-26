@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QAction, QMenu, QTextEdit
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QAction, QMenu, QTextEdit, QLineEdit
 from PyQt5.QtGui import QIcon
 
 
@@ -12,7 +12,7 @@ class Example(QMainWindow):
     def initUI(self):
         self.statusBar().showMessage('Ready')
 
-        self.setGeometry(300, 300, 250, 150)
+        self.setGeometry(400, 100, 500, 500)
         self.setWindowTitle('Status bar')
         self.show()
 

@@ -1,35 +1,46 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox
 from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import pyqtSlot
 
 
-class Example(QMainWindow):
+class App(QMainWindow):
 
     def __init__(self):
         super().__init__()
-
+        self.title = 'PyQt5 textbox -'
+        self.left = 300
+        self.top = 400
+        self.width = 400
+        self.height = 140
         self.initUI()
 
-
     def initUI(self):
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
 
-        exitAct = QAction(QIcon('hdds.ico'), 'Exit', self)
-        exitAct.setShortcut('Ctrl+Q')
-        exitAct.triggered.connect(qApp.quit)
+        # Create textbox
+        self.textbox = QLineEdit(self)
+        self.textbox.move(20, 20)
+        self.textbox.resize(280, 40)
 
-        self.toolbar = self.addToolBar('Exit')
-        self.toolbar.addAction(exitAct)
+        # Create a button in the window
+        self.button = QPushButton('Show text', self)
+        self.button.move(20, 80)
 
-        self.setGeometry(300, 300, 300, 200)
-        self.setWindowTitle('Toolbar')
+        # connect button to function on_click
+        self.button.clicked.connect(self.on_click)
         self.show()
 
-
-def main():
-    app = QApplication(sys.argv)
-    ex = Example()
-    sys.exit(app.exec_())
+    @pyqtSlot()
+    def on_click(self):
+        textboxValue = self.textbox.text()
+        QMessageBox.question(self, 'Message -', "You typed: " + textboxValue, QMessageBox.Ok,
+                             QMessageBox.Ok)
+        self.textbox.setText("")
 
 
 if __name__ == '__main__':
-    main()
+    app = QApplication(sys.argv)
+    ex = App()
+    sys.exit(app.exec_())
